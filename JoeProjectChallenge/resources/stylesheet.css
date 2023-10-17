@@ -1,15 +1,53 @@
-.banner {
-    display: flex;
+html body {
+    margin: 0;
+    padding: 0;
+}
+
+.masthead {
     padding: 1rem 2rem;
+}
+
+.contain {
     max-width: 1280px;
-    justify-content: center;
-}
-#navbar {
+    margin: 0 auto;	
     display: flex;
-    margin-left: auto;
+    justify-content: space-between;
+    align-items: center;
 }
-#navbar li{
-    margin: 0 12px;
+
+.contain > ul {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+ .navBar > li> a {
     font-size: 20px;
+    color: red;
+}
+
+ul {
+    list-style: none;
+}
+
+.dropButton {
+    position: relative;
+    display: inline-block;
+}
+
+.sub-nav {
+    display: none;
+    position: absolute;
+    background-color: white;
     color: blue;
+    z-index: 1;
+}
+
+.dropButton :hover {
+    color: white;
+    background-color: black;
+}
+
+.dropButton :hover .sub-nav {
+    display: block;
 }
