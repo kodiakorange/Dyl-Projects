@@ -1,3 +1,11 @@
+@use '_variables';
+
+body {
+    color: variables.$best-color;
+    
+}
+
+
 html body {
     margin: 0;
     padding: 0;
