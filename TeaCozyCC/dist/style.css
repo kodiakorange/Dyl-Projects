@@ -31,7 +31,6 @@ nav {
   flex-direction: column;
   background-image: url(https://content.codecademy.com/courses/freelance-1/unit-4/img-mission-background.jpg);
   height: 700px;
-  max-width: 1200px;
   margin: 0 20px;
 }
 
@@ -54,7 +53,6 @@ nav {
 
 .locations {
   background-image: url(https://content.codecademy.com/courses/freelance-1/unit-4/img-locations-background.jpg);
-  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
