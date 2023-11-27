@@ -1,0 +1,56 @@
+h1 {
+	font-weight: 300;
+	font-size: 3rem;
+	padding: 1rem;
+	margin: 0;
+}
+
+* {
+	font-family: "DM Mono";
+}
+
+h2 {
+	padding-left: 1.3rem;
+	margin: 0;
+	font-size: 1rem;
+}
+
+ul {
+	list-style: none;
+	padding-top: 4rem;
+	padding-bottom: 5rem;
+	padding-left: 1.5rem;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	color: lightgrey;
+}
+
+.site-hero-wrapper {
+	height: 100vh;
+	width: 100vw;
+	background-color: grey;
+	background-size: 100%;
+}
+
+span {
+	color: lightgrey;
+}
+
+.hero-main-wrapper p {
+	width: 30%;
+	margin-right: 3rem;
+	line-height: 2;
+}
+
+.hero-main-wrapper {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 3rem;
+	align-items: baseline;
+}
