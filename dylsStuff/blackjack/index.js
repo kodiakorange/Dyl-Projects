@@ -1,5 +1,5 @@
 let handSum;
-let dealerSum;
+let dealerSum = 0;
 let currentPot = 0;
 let bankroll = 100;
 
@@ -10,37 +10,44 @@ const bankrollDisplay = document.getElementById("bankrollDisplay");
 const currentPotDisplay = document.getElementById("currentPot");
 
 function checkScore() {
-	if (handSum === 21) {
-		resultDisplay.textContent = "Blackjack! You Win!";
-		bankroll += currentPot;
-		bankrollDisplay.textContent = "$ " + bankroll + " in hand";
-		currentPot = 0;
-		currentPotDisplay.textContent = "$" + currentPot + " in the pot";
-	} else if (handSum > 21 && dealerSum <= 21) {
-		resultDisplay.textContent =
-			"You fool! You've busted and now you lose! Haha";
-		currentPot = 0;
-		currentPotDisplay.textContent = "$" + currentPot + " in the pot";
-	} else if (handSum > 21 && dealerSum > 21) {
-		resultDisplay.textContent = "You both busted, it's a push.";
-		bankroll += 0.5 * currentPot;
-		bankrollDisplay.textContent = "$ " + bankroll + " in hand";
-		currentPot = 0;
-		currentPotDisplay.textContent = "$" + currentPot + " in the pot";
-	} else if (handSum <= dealerSum && dealerSum <= 21) {
-		resultDisplay.textContent = "Hit to draw another..";
-	} else {
-		resultDisplay.textContent = "You beat the dealer! You win!";
-		bankroll += currentPot;
-		bankrollDisplay.textContent = "$ " + bankroll + " in hand";
-		currentPot = 0;
-		currentPotDisplay.textContent = "$" + currentPot + " in the pot";
+	if (dealerSum != 0) {
+		if (handSum === 21 && dealerSum != 21) {
+			resultDisplay.textContent = "Blackjack! You Win!";
+			bankroll += currentPot;
+			bankrollDisplay.textContent = "$ " + bankroll + " in hand";
+			currentPot = 0;
+			currentPotDisplay.textContent = "$" + currentPot + " in the pot";
+		} else if (handSum > 21 && dealerSum <= 21) {
+			resultDisplay.textContent =
+				"You fool! You've busted and now you lose! Haha";
+			currentPot = 0;
+			currentPotDisplay.textContent = "$" + currentPot + " in the pot";
+		} else if (
+			(handSum > 21 && dealerSum > 21) ||
+			(dealerSum == 21 && handSum == 21)
+		) {
+			resultDisplay.textContent = "It's a push.";
+			bankroll += 0.5 * currentPot;
+			bankrollDisplay.textContent = "$ " + bankroll + " in hand";
+			currentPot = 0;
+			currentPotDisplay.textContent = "$" + currentPot + " in the pot";
+		} else if (handSum <= dealerSum && dealerSum <= 21) {
+			resultDisplay.textContent = "Hit to draw another..";
+		} else {
+			resultDisplay.textContent = "You beat the dealer! You win!";
+			bankroll += currentPot;
+			bankrollDisplay.textContent = "$ " + bankroll + " in hand";
+			currentPot = 0;
+			currentPotDisplay.textContent = "$" + currentPot + " in the pot";
+		}
+		pocketWatch();
 	}
-	pocketWatch();
 }
 
 function dealHand() {
+	dealerSumDisplay.textContent = "The dealer's hand will appear here";
 	if (bankroll > 0) {
+		dealerSum = 0;
 		bankroll -= 10;
 		currentPot += 20;
 		updateCounts();
@@ -55,6 +62,15 @@ function dealHand() {
 			secondCard +
 			". Your total is " +
 			handSum;
+
+		checkScore();
+	} else {
+		pocketWatch();
+	}
+}
+
+function dealerDraw() {
+	if (dealerSum === 0) {
 		let firstDealerCard = Math.floor(10 * Math.random() + 2);
 		let secondDealerCard = Math.floor(10 * Math.random() + 2);
 		dealerSum = firstDealerCard + secondDealerCard;
@@ -65,22 +81,16 @@ function dealHand() {
 			secondDealerCard +
 			". Dealer total is " +
 			dealerSum;
-		checkScore();
 	} else {
-		pocketWatch();
+		while (dealerSum < 17) {
+			dealerSum += Math.floor(10 * Math.random() + 2);
+			dealerSumDisplay.textContent = "Dealer's total is " + dealerSum;
+			checkScore();
+		}
 	}
-}
-
-function dealerDraw() {
-	while (dealerSum < 17) {
-		dealerSum += Math.floor(10 * Math.random() + 2);
-	}
-	dealerSumDisplay.textContent = "Dealer's total is " + dealerSum;
-	checkScore();
 }
 
 function drawCard() {
-	dealerDraw();
 	let newCard = Math.floor(10 * Math.random() + 2);
 	handSum = handSum + newCard;
 	cardsDisplay.textContent =
@@ -95,7 +105,6 @@ function pocketWatch() {
 }
 function betMoney() {
 	if (bankroll > 0) {
-		dealerDraw();
 		bankroll -= 10;
 		currentPot += 20;
 		updateCounts();
@@ -106,7 +115,6 @@ function betMoney() {
 
 function updateCounts() {
 	currentPotDisplay.textContent = "$" + currentPot + " in the pot";
-
 	bankrollDisplay.textContent = "$ " + bankroll + " in hand";
 }
 
@@ -118,5 +126,6 @@ document.querySelector("#dealButton").addEventListener("click", dealHand);
 document.querySelector("#hitButton").addEventListener("click", drawCard);
 document.querySelector("#betButton").addEventListener("click", betMoney);
 document.querySelector("#resetButton").addEventListener("click", reset);
+document.querySelector("#readyButton").addEventListener("click", dealerDraw);
 
 //[array of 52 cards] random number between 0-51 math.floor selects a card, each card has a value property assigned (0-11), set up a div to display each card by selecting indexof[cardsArray] and displaying the image file.
