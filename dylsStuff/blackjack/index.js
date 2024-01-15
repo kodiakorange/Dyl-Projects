@@ -36,6 +36,7 @@ function checkScore() {
 		currentPot = 0;
 		currentPotDisplay.textContent = "$" + currentPot + " in the pot";
 	}
+	pocketWatch();
 }
 
 function dealHand() {
