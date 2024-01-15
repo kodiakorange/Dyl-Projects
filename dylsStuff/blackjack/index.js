@@ -1,4 +1,5 @@
 let handSum;
+let dealerSum;
 let currentPot = 0;
 let bankroll = 100;
 
