@@ -2,12 +2,32 @@ let handSum;
 let dealerSum = 0;
 let currentPot = 0;
 let bankroll = 100;
+let cardsArray = [];
 
 const dealerSumDisplay = document.querySelector("#dealerHand");
 const resultDisplay = document.querySelector("#mainDisplay");
 const cardsDisplay = document.querySelector("#playerHand");
 const bankrollDisplay = document.getElementById("bankrollDisplay");
 const currentPotDisplay = document.getElementById("currentPot");
+
+function buildCardArray() {
+	for (let i = 1; i <= 52; i++) {
+		let value;
+		if (i % 13 === 10) {
+			value = 11; // Ace
+		} else if (i % 13 >= 11) {
+			value = 10; // Face cards (Jack, Queen, King)
+		} else {
+			value = (i % 13) + 1;
+		}
+		let card = {
+			name: "card" + i,
+			imgSrc: "./resources/playingCards/card" + i + ".svg",
+			value: value,
+		};
+		cardsArray.push(card);
+	}
+}
 
 function checkScore() {
 	if (dealerSum != 0) {
@@ -121,7 +141,7 @@ function updateCounts() {
 function reset() {
 	location.reload();
 }
-
+buildCardArray();
 document.querySelector("#dealButton").addEventListener("click", dealHand);
 document.querySelector("#hitButton").addEventListener("click", drawCard);
 document.querySelector("#betButton").addEventListener("click", betMoney);
