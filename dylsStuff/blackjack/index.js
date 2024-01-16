@@ -65,6 +65,7 @@ function checkScore() {
 }
 
 function dealHand() {
+	buildCardArray();
 	dealerSumDisplay.textContent = "The dealer's hand will appear here";
 	if (bankroll > 0) {
 		dealerSum = 0;
@@ -72,17 +73,15 @@ function dealHand() {
 		currentPot += 20;
 		updateCounts();
 
-		let firstCard = Math.floor(10 * Math.random() + 2);
-		let secondCard = Math.floor(10 * Math.random() + 2);
-		handSum = firstCard + secondCard;
-		cardsDisplay.textContent =
-			"Your hand is a " +
-			firstCard +
-			" and a " +
-			secondCard +
-			". Your total is " +
-			handSum;
+		let firstCard = cardsArray[Math.floor(Math.random(0, 52))];
+		let secondCard = cardsArray[Math.floor(Math.random(0, 52))];
+		handSum = firstCard.value + secondCard.value;
 
+		"Your total is " + handSum;
+		let firstCardImg = document.querySelector("#cardImg1");
+		let secondCardImg = document.querySelector("#cardImg2");
+		firstCardImg.src = firstCard.imgSrc;
+		secondCardImg.src = secondCard.imgSrc;
 		checkScore();
 	} else {
 		pocketWatch();
@@ -91,16 +90,17 @@ function dealHand() {
 
 function dealerDraw() {
 	if (dealerSum === 0) {
-		let firstDealerCard = Math.floor(10 * Math.random() + 2);
-		let secondDealerCard = Math.floor(10 * Math.random() + 2);
-		dealerSum = firstDealerCard + secondDealerCard;
-		dealerSumDisplay.textContent =
-			"Dealer's hand is a " +
-			firstDealerCard +
-			" and a " +
-			secondDealerCard +
-			". Dealer total is " +
-			dealerSum;
+		let firstDealerCard =
+			cardsArray[Math.floor(Math.random() * cardsArray.length)];
+		let secondDealerCard =
+			cardsArray[Math.floor(Math.random() * cardsArray.length)];
+		dealerSum = firstDealerCard.value + secondDealerCard.value;
+
+		dealerSumDisplay.textContent = "Dealer total is " + dealerSum;
+		let firstDealerCardImg = document.querySelector("#dealerCardImg1");
+		let secondDealerCardImg = document.querySelector("#dealerCardImg2");
+		firstDealerCardImg.src = firstDealerCard.imgSrc;
+		secondDealerCardImg.src = secondDealerCard.imgSrc;
 	} else {
 		while (dealerSum < 17) {
 			dealerSum += Math.floor(10 * Math.random() + 2);
@@ -141,11 +141,13 @@ function updateCounts() {
 function reset() {
 	location.reload();
 }
-buildCardArray();
-document.querySelector("#dealButton").addEventListener("click", dealHand);
-document.querySelector("#hitButton").addEventListener("click", drawCard);
-document.querySelector("#betButton").addEventListener("click", betMoney);
-document.querySelector("#resetButton").addEventListener("click", reset);
-document.querySelector("#readyButton").addEventListener("click", dealerDraw);
 
-//[array of 52 cards] random number between 0-51 math.floor selects a card, each card has a value property assigned (0-11), set up a div to display each card by selecting indexof[cardsArray] and displaying the image file.
+document.addEventListener("DOMContentLoaded", function () {
+	document.querySelector("#dealButton").addEventListener("click", dealHand);
+	document.querySelector("#hitButton").addEventListener("click", drawCard);
+	document.querySelector("#betButton").addEventListener("click", betMoney);
+	document.querySelector("#resetButton").addEventListener("click", reset);
+	document
+		.querySelector("#readyButton")
+		.addEventListener("click", dealerDraw);
+}); //[array of 52 cards] random number between 0-51 math.floor selects a card, each card has a value property assigned (0-11), set up a div to display each card by selecting indexof[cardsArray] and displaying the image file.

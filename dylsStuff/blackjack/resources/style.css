@@ -10,6 +10,12 @@
     margin: 0 auto;
 }
 
+img {
+    height: 30%;
+    width: 40%;
+    display:
+}
+
 button {
     max-width: max-content;
     padding: .5rem;
